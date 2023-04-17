@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
-import { AtGuard } from './common/guards';
+import { AtGuard } from './common/guard';
 import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
 

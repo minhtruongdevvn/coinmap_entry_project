@@ -7,10 +7,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { GetUser, Public } from '../common/decorator';
-import { RtGuard } from '../common/guards';
+import { RtGuard } from '../common/guard';
 import { AuthService } from './auth.service';
 import { SigninDto } from './dto';
-import { JwtRefreshPayload, Tokens } from './types';
+import { JwtRefreshPayload, Tokens } from './type';
 
 @Controller('auth')
 export class AuthController {

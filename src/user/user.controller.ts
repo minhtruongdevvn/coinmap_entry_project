@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
-import { Tokens } from 'src/auth/types';
+import { Tokens } from 'src/auth/type';
 import { GetUser, Public } from 'src/common/decorator';
 import { CreateUserDto } from './dto';
 import { UpdateUserDto } from './dto/update-user.dto';

@@ -4,9 +4,9 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { getHash, validateHash } from 'src/helpers';
-import { User, UserDocument } from 'src/user/schemas/user.schema';
+import { User, UserDocument } from 'src/user/schema/user.schema';
 import { SigninDto } from './dto';
-import { JwtPayload, Tokens } from './types';
+import { JwtPayload, Tokens } from './type';
 
 @Injectable()
 export class AuthService {

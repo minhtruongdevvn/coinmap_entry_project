@@ -3,11 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
 import { UserSummary } from 'src/common/dto';
 import { getHash } from 'src/helpers';
-import { TodoStatus } from 'src/todo/schemas/todo-status.enum';
-import { Todo, TodoDocument } from 'src/todo/schemas/todo.schema';
+import { TodoStatus } from 'src/todo/schema/todo-status.enum';
+import { Todo, TodoDocument } from 'src/todo/schema/todo.schema';
 import { CreateUserDto } from './dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User, UserDocument } from './schemas/user.schema';
+import { User, UserDocument } from './schema/user.schema';
 
 @Injectable()
 export class UserService {

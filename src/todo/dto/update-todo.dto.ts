@@ -1,5 +1,5 @@
 import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
-import { TodoStatus } from '../schemas/todo-status.enum';
+import { TodoStatus } from '../schema/todo-status.enum';
 
 export class UpdateTodoDto {
   @IsString()

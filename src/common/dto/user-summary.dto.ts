@@ -1,4 +1,4 @@
-import { User } from 'src/user/schemas/user.schema';
+import { User } from 'src/user/schema/user.schema';
 
 export class UserSummary {
   ownerId: User;

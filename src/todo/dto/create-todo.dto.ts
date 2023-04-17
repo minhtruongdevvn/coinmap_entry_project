@@ -5,8 +5,8 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { User } from 'src/user/schemas/user.schema';
-import { TodoStatus } from '../schemas/todo-status.enum';
+import { User } from 'src/user/schema/user.schema';
+import { TodoStatus } from '../schema/todo-status.enum';
 
 export class CreateTodoDto {
   @IsNotEmpty()

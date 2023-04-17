@@ -9,7 +9,8 @@ import {
 } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { Tokens } from 'src/auth/type';
-import { GetUser, Public } from 'src/common/decorator';
+import { GetUser, Public, Roles } from 'src/common/decorator';
+import { Role } from 'src/common/enum';
 import { CreateUserDto } from './dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
@@ -41,13 +42,20 @@ export class UserController {
     return this.userService.getSummary(id);
   }
 
+  @Public()
   @Get('top/:top')
   getTop(@Param('top', ParseIntPipe) top: number) {
     return this.userService.getTopSummary(top);
   }
 
+  @Roles(Role.Manager)
   @Put(':id')
   update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+    return this.userService.update(id, dto);
+  }
+
+  @Put()
+  selfUpdate(@GetUser('sub') id: string, @Body() dto: UpdateUserDto) {
     return this.userService.update(id, dto);
   }
 }

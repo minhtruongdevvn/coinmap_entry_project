@@ -6,7 +6,6 @@ import {
   IsString,
 } from 'class-validator';
 import { User } from 'src/user/schema/user.schema';
-import { TodoStatus } from '../schema/todo-status.enum';
 
 export class CreateTodoDto {
   @IsNotEmpty()
@@ -24,10 +23,6 @@ export class CreateTodoDto {
   @IsDate()
   @IsOptional()
   updateAt?: Date;
-
-  @IsNumber()
-  @IsOptional()
-  status?: TodoStatus;
 
   @IsNumber()
   point: number;

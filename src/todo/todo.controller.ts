@@ -7,7 +7,8 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { GetUser } from 'src/common/decorator';
+import { GetUser, Roles } from 'src/common/decorator';
+import { Role } from 'src/common/enum';
 import { CreateTodoDto, UpdateTodoDto } from './dto';
 import { TodoService } from './todo.service';
 
@@ -15,6 +16,7 @@ import { TodoService } from './todo.service';
 export class TodoController {
   constructor(private readonly service: TodoService) {}
 
+  @Roles(Role.Manager)
   @Post()
   create(@Body() createTodoDto: CreateTodoDto) {
     return this.service.create(createTodoDto);
@@ -29,11 +31,13 @@ export class TodoController {
     await this.service.updateStatus(userId, id, status);
   }
 
+  @Roles(Role.Manager)
   @Put(':id')
   update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
     return this.service.update(id, updateTodoDto);
   }
 
+  @Roles(Role.Manager)
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.service.delete(id);

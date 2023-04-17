@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
-import { AtGuard } from './common/guard';
+import { AtGuard, RoleGuard } from './common/guard';
 import { TodoModule } from './todo/todo.module';
 import { UserModule } from './user/user.module';
 
@@ -25,6 +25,10 @@ import { UserModule } from './user/user.module';
     {
       provide: APP_GUARD,
       useClass: AtGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
     },
   ],
 })

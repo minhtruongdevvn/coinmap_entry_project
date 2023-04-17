@@ -21,6 +21,7 @@ export class MongoExceptionFilter implements ExceptionFilter {
 
     const errorCode = MongoErrorCode.get(exception.code);
     if (!errorCode) {
+      console.log(exception);
       httpAdapter.reply(
         ctx.getResponse(),
         {

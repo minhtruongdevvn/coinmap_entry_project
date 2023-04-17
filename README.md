@@ -1,73 +1,86 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#installation">Installation</a>
+    </li>
+    <li><a href="#todo">Todo</a></li>
+  </ol>
+</details>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<!-- ABOUT THE PROJECT -->
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## About The Project
 
-## Description
+This web-app is used by manager to assign the tasks for employee.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+**Base use case:**
+
+- Signup
+- Signin
+- Logout
+- Refresh token
+
+**Manager use case:**
+
+- CRUD tasks (todos)
+- Assign task to employee
+- Get summary about all employee
+- Get top emplyee
+- Get all task of an employee
+- Update employee infomation
+
+**Employee use case:**
+
+- Update task status
+- Get top employee
+- Get all assigned task
+- Get self summary
+- Update self infomation
+
+### Built With
+
+[![Nest][NestJS]][NestJSUri] [![MongoDB][MongoDB]][MongoDBUri]
+
+<!-- GETTING STARTED -->
 
 ## Installation
 
-```bash
-$ yarn install
-```
+1. Install NPM packages
+   ```sh
+   yarn
+   ```
+2. Create .env file at root contains
+   ```sh
+    PORT=3333
+    AT_SIGN_SECRET='supa-secret'
+    RT_SIGN_SECRET='supa-secret2'
+    DATABASE_URL='your mongodb database connection to the database'
+   ```
+3. Open postman and import [this file](coinmap_entry.postman_collection.json) to access API usages
 
-## Running the app
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-```bash
-# development
-$ yarn run start
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-# watch mode
-$ yarn run start:dev
+[NestJS]: https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white
+[NestJSUri]: https://docs.nestjs.com/
+[MongoDB]: https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white
+[MongoDBUri]: https://www.mongodb.com/
 
-# production mode
-$ yarn run start:prod
-```
+## Todo
 
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- Password contraints
+- Create client (react web application)
+- Integrate CASL and implement PoliciesGuard (remove hardcoded roles)
+- Add inteceptor to filter sensitive, unwanted fields in response
+- Todos and users pagination
+- Implement web-socket protocol to notify employee want assigned a task

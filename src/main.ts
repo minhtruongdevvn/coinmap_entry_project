@@ -11,7 +11,7 @@ async function bootstrap() {
   app.useGlobalFilters(new MongoExceptionFilter(app.get(HttpAdapterHost)));
 
   const configService = app.get(ConfigService);
-  const port: number = configService.get('PORT');
+  const port: number = configService.get('PORT') || 3333;
   await app
     .listen(port)
     .then(() => console.log(`App started at: http://localhost:${port}/`));

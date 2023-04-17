@@ -66,7 +66,7 @@ This web-app is used by manager to assign the tasks for employee.
    ```
 3. Open postman and import [this file](coinmap_entry.postman_collection.json) to access API usages
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#about-the-project">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

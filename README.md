@@ -79,6 +79,7 @@ This web-app is used by manager to assign the tasks for employee.
 ## Todo
 
 - Password contraints
+- Add testing
 - Create client (react web application)
 - Integrate CASL and implement PoliciesGuard (remove hardcoded roles)
 - Add inteceptor to filter sensitive, unwanted fields in response

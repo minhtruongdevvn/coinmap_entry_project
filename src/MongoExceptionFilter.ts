@@ -8,7 +8,7 @@ import { HttpAdapterHost } from '@nestjs/core';
 import { MongoError } from 'mongodb';
 
 type MongoErrorName = 'DuplicateKey' | 'WriteConflict';
-const MongoErrorCode = new Map<number | string, MongoErrorName>();
+const MongoErrorCode = new Map<number, MongoErrorName>();
 MongoErrorCode.set(11000, 'DuplicateKey');
 MongoErrorCode.set(112, 'WriteConflict');
 
@@ -19,7 +19,7 @@ export class MongoExceptionFilter implements ExceptionFilter {
     const { httpAdapter } = this.httpAdapterHost;
     const ctx = host.switchToHttp();
 
-    const errorCode = MongoErrorCode.get(exception.code);
+    const errorCode = MongoErrorCode.get(exception.code as number);
     if (!errorCode) {
       console.log(exception);
       httpAdapter.reply(

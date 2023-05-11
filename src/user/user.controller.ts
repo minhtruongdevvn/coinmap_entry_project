@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { Tokens } from 'src/auth/type';
 import { GetUser, Public, Roles } from 'src/common/decorator';
@@ -44,7 +36,7 @@ export class UserController {
 
   @Public()
   @Get('top/:top')
-  getTop(@Param('top', ParseIntPipe) top: number) {
+  getTop(@Param('top') top: number) {
     return this.userService.getTopSummary(top);
   }
 

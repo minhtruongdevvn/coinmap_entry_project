@@ -9,7 +9,7 @@ import {
 import { GetUser, Public } from '../common/decorator';
 import { RtGuard } from '../common/guard';
 import { AuthService } from './auth.service';
-import { SigninDto } from './dto';
+import { SignInDto } from './dto';
 import { JwtRefreshPayload, Tokens } from './type';
 
 @Controller('auth')
@@ -18,8 +18,8 @@ export class AuthController {
 
   @Public()
   @Post('signin')
-  signin(@Body() dto: SigninDto): Promise<Tokens> {
-    return this.authService.signin(dto);
+  signIn(@Body() dto: SignInDto): Promise<Tokens> {
+    return this.authService.signIn(dto);
   }
 
   @Post('logout')

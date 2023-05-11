@@ -96,7 +96,7 @@ export class UserService {
         },
         {
           $group: {
-            _id: '$owner._id', // group by onwer id
+            _id: '$owner._id', // group by owner id
             owner: { $first: '$owner' },
             totalPoint: { $sum: '$point' },
             completed: { $sum: 1 },

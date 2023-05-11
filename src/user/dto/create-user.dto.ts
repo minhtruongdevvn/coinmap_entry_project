@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+import { IsPasswordValid } from 'src/common/validator/password.validator';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -20,6 +21,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
+  @IsPasswordValid()
   password: string;
 
   @IsDate()

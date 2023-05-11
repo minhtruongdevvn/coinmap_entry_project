@@ -13,7 +13,7 @@ export class AtGuard extends AuthGuard('jwt-access-token') {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const isPublic = this.reflector.getAllAndOverride(IS_PUBLIC_KEY, [
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(), // controller actions
       context.getClass(), // controller
     ]);

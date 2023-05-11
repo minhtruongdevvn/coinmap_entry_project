@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Put } from '@nestjs/common';
 import { GetUser, Roles } from 'src/common/decorator';
 import { Role } from 'src/common/enum';
 import { CreateTodoDto, UpdateTodoDto } from './dto';
@@ -23,9 +15,10 @@ export class TodoController {
   }
 
   @Put(':id/:status')
-  async updatestatus(
+  async updateStatus(
     @Param('id') id: string,
-    @Param('status', ParseIntPipe) status: number,
+    @Param('status' /*ParseIntPipe*/) status: number,
+    // no need the ParseIntPipe bc of ValidationPipe({transform: true})
     @GetUser('sub') userId: string,
   ) {
     await this.service.updateStatus(userId, id, status);

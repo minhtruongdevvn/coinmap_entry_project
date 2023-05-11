@@ -78,10 +78,9 @@ This web-app is used by manager to assign the tasks for employee.
 
 ## Todo
 
-- Password contraints
 - Add testing
 - Create client (react web application)
 - Integrate CASL and implement PoliciesGuard (remove hardcoded roles)
-- Add inteceptor to filter sensitive, unwanted fields in response
+- Add interceptor to filter sensitive, unwanted fields in response
 - Todos and users pagination
-- Implement web-socket protocol to notify employee want assigned a task
+- Implement web-socket protocol to notify employee about assigned a task

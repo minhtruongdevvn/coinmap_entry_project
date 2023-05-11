@@ -1,7 +1,21 @@
 import { registerDecorator, ValidationOptions } from 'class-validator';
 import * as zxcvbn from 'zxcvbn';
 
-export function IsPasswordValid(validationOptions?: ValidationOptions) {
+export type Constraint = {
+  maxLength: number;
+  minimumScore: number;
+  requiredLowercase?: boolean;
+  requiredUppercase?: boolean;
+  requiredDigit?: boolean;
+  requiredSpecial?: boolean;
+};
+
+export function IsPasswordValid(
+  constraint: Constraint = { maxLength: 6, minimumScore: 3 },
+  validationOptions?: ValidationOptions,
+) {
+  const regex = getRegex(constraint);
+  const message = getMessage(constraint);
   return function (object: any, propertyName: string) {
     registerDecorator({
       target: object.constructor,
@@ -20,24 +34,13 @@ export function IsPasswordValid(validationOptions?: ValidationOptions) {
             return false;
           }
 
-          const password: string = value;
-
-          if (password.length < 6) {
-            this.error = 'Password must has at least 6 character';
+          if (!regex.test(value)) {
+            this.error = message;
             return false;
           }
 
-          const pattern = new RegExp(
-            '((?=.*d)|(?=.*W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$',
-          );
-          if (!pattern.test(password)) {
-            this.error =
-              'Password must has at least 1 upper case, 1 lower case, 1 number or special character';
-            return false;
-          }
-
-          const result = zxcvbn(password);
-          if (result.score < 3) {
+          const result = zxcvbn(value);
+          if (result.score < constraint.minimumScore) {
             this.error = 'Password is ez to guess';
             return false;
           }
@@ -50,3 +53,32 @@ export function IsPasswordValid(validationOptions?: ValidationOptions) {
     });
   };
 }
+
+const getRegex = (constraint: Constraint) => {
+  let expression = '^';
+  if (constraint.requiredLowercase) expression += '(?=.*[a-z])';
+  if (constraint.requiredUppercase) expression += '(?=.*[A-Z])';
+  if (constraint.requiredDigit) expression += '(?=.*\\d)';
+  if (constraint.requiredSpecial) expression += '(?=.*[@$!%*?&])';
+
+  let match: string;
+  if (constraint.requiredSpecial) match = '[a-zA-Z\\d@$!%*?&]';
+  else match = '[a-zA-Z\\d]';
+
+  return new RegExp(expression + match + `{${constraint.maxLength},}$`);
+};
+
+const getMessage = (constraint: Constraint) => {
+  let message = 'Password must has ';
+  let atLeast = '';
+  if (constraint.requiredLowercase) atLeast += '1 lower case, ';
+  if (constraint.requiredUppercase) atLeast += '1 upper case, ';
+  if (constraint.requiredDigit) atLeast += '1 number, ';
+  if (constraint.requiredSpecial) atLeast += '1 special character, ';
+
+  if (atLeast)
+    message += `at least ${atLeast.substring(0, atLeast.length - 2)} and `;
+  message += `minimum ${constraint.maxLength} characters`;
+
+  return message;
+};

@@ -46,32 +46,7 @@ export class UserService {
             owner: new mongoose.Types.ObjectId(userId),
           },
         },
-        {
-          $lookup: {
-            from: 'User',
-            localField: 'owner',
-            foreignField: '_id',
-            as: 'owner',
-          },
-        },
-        {
-          $group: {
-            _id: null,
-            owner: { $first: '$owner' },
-            totalPoint: { $sum: '$point' },
-            completed: { $sum: 1 },
-          },
-        },
-        {
-          $project: {
-            _id: 0,
-            'owner.hash': 0,
-            'owner.hashRt': 0,
-            'owner.email': 0,
-            'owner.createdAt': 0,
-            'owner.__v': 0,
-          },
-        },
+        ...this.getSummaryPipelineStages(),
       ])
       .exec();
 
@@ -86,35 +61,41 @@ export class UserService {
             status: TodoStatus.Completed,
           },
         },
-        {
-          $lookup: {
-            from: 'User',
-            localField: 'owner',
-            foreignField: '_id',
-            as: 'owner',
-          },
-        },
-        {
-          $group: {
-            _id: '$owner._id', // group by owner id
-            owner: { $first: '$owner' },
-            totalPoint: { $sum: '$point' },
-            completed: { $sum: 1 },
-          },
-        },
+        ...this.getSummaryPipelineStages(),
         { $sort: { totalPoint: -1 } },
         { $limit: top },
-        {
-          $project: {
-            _id: 0,
-            'owner.hash': 0,
-            'owner.hashRt': 0,
-            'owner.email': 0,
-            'owner.createdAt': 0,
-            'owner.__v': 0,
-          },
-        },
       ])
       .exec();
+  }
+
+  private getSummaryPipelineStages() {
+    return [
+      {
+        $lookup: {
+          from: 'User',
+          localField: 'owner',
+          foreignField: '_id',
+          as: 'owner',
+        },
+      },
+      {
+        $group: {
+          _id: '$owner._id', // group by owner id
+          owner: { $first: '$owner' },
+          totalPoint: { $sum: '$point' },
+          completed: { $sum: 1 },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          'owner.hash': 0,
+          'owner.hashRt': 0,
+          'owner.email': 0,
+          'owner.createdAt': 0,
+          'owner.__v': 0,
+        },
+      },
+    ];
   }
 }

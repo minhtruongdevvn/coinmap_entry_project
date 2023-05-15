@@ -11,7 +11,7 @@ export type Constraint = {
 };
 
 export function IsPasswordValid(
-  constraint: Constraint = { maxLength: 6, minimumScore: 3 },
+  constraint: Constraint = { maxLength: 8, minimumScore: 3 },
   validationOptions?: ValidationOptions,
 ) {
   const regex = getRegex(constraint);

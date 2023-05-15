@@ -1,10 +1,10 @@
+import { getHash, validateHash } from '@/helpers';
+import { User, UserDocument } from '@/user/schema/user.schema';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { getHash, validateHash } from 'src/helpers';
-import { User, UserDocument } from 'src/user/schema/user.schema';
 import { SignInDto } from './dto';
 import { JwtPayload, Tokens } from './type';
 

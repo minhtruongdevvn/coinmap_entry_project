@@ -1,4 +1,2 @@
-import { AtStrategy } from './at.strategy';
-import { RtStrategy } from './rt.strategy';
-
-export { AtStrategy, RtStrategy };
+export * from './at.strategy';
+export * from './rt.strategy';

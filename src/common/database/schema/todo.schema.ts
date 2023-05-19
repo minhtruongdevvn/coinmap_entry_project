@@ -1,11 +1,17 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { User } from '@/common/database/schema/user.schema';
+import { AppSchema } from '@/common/decorator/app-schema.decorator';
+import { Prop, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { User } from 'src/user/schema/user.schema';
-import { TodoStatus } from './todo-status.enum';
 
 export type TodoDocument = HydratedDocument<Todo>;
+export enum TodoStatus {
+  Assigned,
+  Completed,
+}
 
-@Schema({ collection: 'Todo' })
+@AppSchema({
+  collection: 'Todo',
+})
 export class Todo {
   @Prop({ required: true })
   title?: string;

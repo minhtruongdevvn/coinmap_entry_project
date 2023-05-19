@@ -1,6 +1,6 @@
 import { Tokens } from '@/auth/type';
+import { User } from '@/common/database/schema/user.schema';
 import { Role } from '@/common/enum';
-import { User } from '@/user/schema/user.schema';
 
 const registeredUser = (): User => {
   const now = new Date();
@@ -11,7 +11,7 @@ const registeredUser = (): User => {
     email: 'test@gmail.com',
     hash: 'asdasdasd',
     name: 'John Doe',
-    role: Role.Manager,
+    role: Role.MANAGER,
   };
 };
 

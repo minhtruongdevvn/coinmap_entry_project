@@ -1,4 +1,5 @@
-import { IsDate, IsEmail, IsOptional, IsString } from 'class-validator';
+import { Role } from '@/common/enum';
+import { IsDate, IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
 
 export class UpdateUserDto {
   @IsOptional()
@@ -9,9 +10,9 @@ export class UpdateUserDto {
   @IsEmail()
   email?: string;
 
-  @IsString()
   @IsOptional()
-  role?: string;
+  @IsEnum(Role)
+  role?: Role;
 
   @IsDate()
   @IsOptional()

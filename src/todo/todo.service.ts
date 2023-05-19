@@ -1,27 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { TodoRepository } from '@/common/database/repository';
+import { Todo, TodoStatus } from '@/common/database/schema';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
-import { TodoStatus } from './schema/todo-status.enum';
-import { Todo, TodoDocument } from './schema/todo.schema';
 
 @Injectable()
 export class TodoService {
   constructor(
-    @InjectModel(Todo.name) private readonly model: Model<TodoDocument>,
+    @Inject(TodoRepository)
+    private readonly todoRepository: TodoRepository,
   ) {}
 
   findAll(): Promise<Todo[]> {
-    return this.model.find().exec();
+    return this.todoRepository.find();
   }
 
-  findOne(id: string): Promise<Todo> {
-    return this.model.findById(id).exec();
+  findById(id: string): Promise<Todo> {
+    return this.todoRepository.findOne({ id });
   }
 
   async create(createTodoDto: CreateTodoDto): Promise<Todo> {
-    const res = await this.model.create({
+    const res = await this.todoRepository.create({
       ...createTodoDto,
     });
 
@@ -29,24 +28,22 @@ export class TodoService {
   }
 
   update(id: string, updateTodoDto: UpdateTodoDto): Promise<Todo> {
-    return this.model.findByIdAndUpdate(id, updateTodoDto).exec();
+    return this.todoRepository.findOneAndUpdate({ id }, updateTodoDto);
   }
 
-  delete(id: string): Promise<Todo> {
-    return this.model.findByIdAndDelete(id).exec();
+  delete(id: string): Promise<void> {
+    return this.todoRepository.findOneAndDelete({ id });
   }
 
   updateStatus(userId: string, todoId: string, status: TodoStatus) {
-    return this.model
-      .findOneAndUpdate(
-        {
-          owner: userId,
-          _id: todoId,
-        },
-        {
-          status,
-        },
-      )
-      .exec();
+    return this.todoRepository.findOneAndUpdate(
+      {
+        owner: userId,
+        _id: todoId,
+      },
+      {
+        status,
+      },
+    );
   }
 }

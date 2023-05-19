@@ -8,7 +8,7 @@ import { TodoService } from './todo.service';
 export class TodoController {
   constructor(private readonly service: TodoService) {}
 
-  @Roles(Role.Manager)
+  @Roles(Role.MANAGER)
   @Post()
   create(@Body() createTodoDto: CreateTodoDto) {
     return this.service.create(createTodoDto);
@@ -24,13 +24,13 @@ export class TodoController {
     await this.service.updateStatus(userId, id, status);
   }
 
-  @Roles(Role.Manager)
+  @Roles(Role.MANAGER)
   @Put(':id')
   update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
     return this.service.update(id, updateTodoDto);
   }
 
-  @Roles(Role.Manager)
+  @Roles(Role.MANAGER)
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.service.delete(id);

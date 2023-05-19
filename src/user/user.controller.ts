@@ -1,3 +1,5 @@
+import { Todo, User } from '@/common/database/schema';
+import { UserSummary } from '@/common/dto';
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { Tokens } from 'src/auth/type';
@@ -24,23 +26,33 @@ export class UserController {
     return tokens;
   }
 
+  @Get()
+  get(): Promise<User[]> {
+    return this.userService.find();
+  }
+
+  @Get('profile')
+  getMe(@GetUser('sub') id: string): Promise<User> {
+    return this.userService.profile(id);
+  }
+
   @Get('todos')
-  getTodos(@GetUser('sub') id: string) {
+  getTodos(@GetUser('sub') id: string): Promise<Todo[]> {
     return this.userService.getTodos(id);
   }
 
   @Get('summary')
-  getSummary(@GetUser('sub') id: string) {
+  getSummary(@GetUser('sub') id: string): Promise<UserSummary> {
     return this.userService.getSummary(id);
   }
 
   @Public()
   @Get('top/:top')
-  getTop(@Param('top') top: number) {
+  getTop(@Param('top') top: number): Promise<UserSummary[]> {
     return this.userService.getTopSummary(top);
   }
 
-  @Roles(Role.Manager)
+  @Roles(Role.MANAGER)
   @Put(':id')
   update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     return this.userService.update(id, dto);

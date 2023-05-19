@@ -52,7 +52,7 @@ describe('AuthController', () => {
     const dto: JwtRefreshPayload = {
       email: 'test@e.com',
       refreshToken: 'asdasd',
-      role: Role.Manager,
+      role: Role.MANAGER,
       sub: 'id',
     };
 
@@ -121,7 +121,7 @@ describe('AuthController', () => {
 //     const user: JwtRefreshPayload = {
 //       email: 'test@e.com',
 //       refreshToken: 'asdasd',
-//       role: Role.Manager,
+//       role: Role.MANAGER,
 //       sub: 'id',
 //     };
 

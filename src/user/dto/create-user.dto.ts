@@ -1,6 +1,8 @@
+import { Role } from '@/common/enum';
 import {
   IsDate,
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -15,9 +17,9 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
-  @IsString()
   @IsOptional()
-  role?: string;
+  @IsEnum(Role)
+  role?: Role;
 
   @IsNotEmpty()
   @IsString()

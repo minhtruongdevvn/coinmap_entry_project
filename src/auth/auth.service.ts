@@ -1,10 +1,9 @@
-import { getHash, validateHash } from '@/helpers';
-import { User, UserDocument } from '@/user/schema/user.schema';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { UserRepository } from '@/common/database/repository';
+import { User } from '@/common/database/schema/user.schema';
+import { getHash, validateHash } from '@/common/helpers';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import { SignInDto } from './dto';
 import { JwtPayload, Tokens } from './type';
 
@@ -13,7 +12,8 @@ export class AuthService {
   constructor(
     private jwtService: JwtService,
     private config: ConfigService,
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @Inject(UserRepository)
+    private readonly userRepository: UserRepository,
   ) {}
 
   async getTokens(userId: string, user: User): Promise<Tokens> {
@@ -42,22 +42,22 @@ export class AuthService {
 
   async updateRt(userId: string, rt: string) {
     const hashRt = await getHash(rt);
-    await this.userModel
-      .findByIdAndUpdate(userId, {
+    await this.userRepository.findOneAndUpdate(
+      { id: userId },
+      {
         hashRt,
-      })
-      .exec();
+      },
+    );
   }
 
   async signIn(dto: SignInDto) {
-    const userDoc = await this.userModel
-      .findOne({
-        email: dto.email,
-      })
-      .exec();
+    const userDoc = await this.userRepository.findOne({
+      email: dto.email,
+    });
     if (!userDoc) throw new UnauthorizedException(); // null
 
-    const userId = userDoc._id.toString();
+    const userId = userDoc.id;
+    console.log(userDoc.id);
     const user = userDoc.toObject();
     const isValidPwd = await validateHash(dto.password, user.hash);
     if (!isValidPwd) throw new UnauthorizedException();
@@ -68,21 +68,19 @@ export class AuthService {
   }
 
   async logout(userId: string) {
-    await this.userModel
-      .updateOne(
-        {
-          _id: userId,
-          hashRt: { $ne: null },
-        },
-        {
-          hashRt: null,
-        },
-      )
-      .exec();
+    await this.userRepository.findOneAndUpdate(
+      {
+        _id: userId,
+        hashRt: { $ne: null },
+      },
+      {
+        hashRt: null,
+      },
+    );
   }
 
   async refreshToken(userId: string, rt: string) {
-    const userDoc = await this.userModel.findById(userId).exec();
+    const userDoc = await this.userRepository.findOne({ id: userId });
     if (!userDoc) throw new UnauthorizedException();
 
     const isValid =

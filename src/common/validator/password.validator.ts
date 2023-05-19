@@ -39,11 +39,11 @@ export function IsPasswordValid(
             return false;
           }
 
-          const result = zxcvbn(value);
-          if (result.score < constraint.minimumScore) {
+          if (zxcvbn(value).score < constraint.minimumScore) {
             this.error = 'Password is ez to guess';
             return false;
           }
+
           return true;
         },
         defaultMessage(): string {
@@ -61,11 +61,9 @@ const getRegex = (constraint: Constraint) => {
   if (constraint.requiredDigit) expression += '(?=.*\\d)';
   if (constraint.requiredSpecial) expression += '(?=.*[@$!%*?&])';
 
-  let match: string;
-  if (constraint.requiredSpecial) match = '[a-zA-Z\\d@$!%*?&]';
-  else match = '[a-zA-Z\\d]';
-
-  return new RegExp(expression + match + `{${constraint.maxLength},}$`);
+  return new RegExp(
+    expression + '[a-zA-Z\\d@$!%*?&]' + `{${constraint.maxLength},}$`,
+  );
 };
 
 const getMessage = (constraint: Constraint) => {

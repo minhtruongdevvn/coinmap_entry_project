@@ -1,14 +1,14 @@
+import '@/common/extension';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { HttpAdapterHost, NestFactory } from '@nestjs/core';
-import { MongoExceptionFilter } from './MongoExceptionFilter';
+import { NestFactory } from '@nestjs/core';
+import 'reflect-metadata';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
-  app.useGlobalFilters(new MongoExceptionFilter(app.get(HttpAdapterHost)));
 
   const configService = app.get(ConfigService);
   const port: number = configService.get('PORT') || 3333;

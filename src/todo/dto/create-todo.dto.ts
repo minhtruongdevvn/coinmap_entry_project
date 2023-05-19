@@ -1,3 +1,4 @@
+import { User } from '@/common/database/schema/user.schema';
 import {
   IsDate,
   IsNotEmpty,
@@ -5,7 +6,6 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { User } from 'src/user/schema/user.schema';
 
 export class CreateTodoDto {
   @IsNotEmpty()

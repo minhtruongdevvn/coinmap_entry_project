@@ -3,16 +3,16 @@ import { AppSchema } from '@/common/decorator/app-schema.decorator';
 import { Prop, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
-export type TodoDocument = HydratedDocument<Todo>;
-export enum TodoStatus {
+export type TaskDocument = HydratedDocument<Task>;
+export enum TaskStatus {
   Assigned,
   Completed,
 }
 
 @AppSchema({
-  collection: 'Todo',
+  collection: 'Task',
 })
-export class Todo {
+export class Task {
   @Prop({ required: true })
   title?: string;
 
@@ -25,8 +25,8 @@ export class Todo {
   @Prop({ type: Date, default: new Date() })
   updateAt?: Date;
 
-  @Prop({ enum: TodoStatus, default: TodoStatus.Assigned })
-  status?: TodoStatus;
+  @Prop({ enum: TaskStatus, default: TaskStatus.Assigned })
+  status?: TaskStatus;
 
   @Prop({ default: 0 })
   point?: number;
@@ -39,4 +39,4 @@ export class Todo {
   owner?: User;
 }
 
-export const TodoSchema = SchemaFactory.createForClass(Todo);
+export const TaskSchema = SchemaFactory.createForClass(Task);

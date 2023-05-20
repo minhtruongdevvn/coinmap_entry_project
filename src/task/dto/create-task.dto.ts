@@ -7,7 +7,7 @@ import {
   IsString,
 } from 'class-validator';
 
-export class CreateTodoDto {
+export class CreateTaskDto {
   @IsNotEmpty()
   @IsString()
   title: string;

@@ -7,10 +7,13 @@ import {
 import { HttpAdapterHost } from '@nestjs/core';
 import { MongoError } from 'mongodb';
 
-type MongoErrorName = 'DuplicateKey' | 'WriteConflict';
-const MongoErrorCode = new Map<number, MongoErrorName>();
-MongoErrorCode.set(11000, 'DuplicateKey');
-MongoErrorCode.set(112, 'WriteConflict');
+enum MongoErrorType {
+  DUPLICATE_KEY = 'DUPLICATE_KEY',
+  WRITE_CONFLICT = 'WRITE_CONFLICT',
+}
+const MongoErrorCode = new Map<number, MongoErrorType>();
+MongoErrorCode.set(11000, MongoErrorType.DUPLICATE_KEY);
+MongoErrorCode.set(112, MongoErrorType.WRITE_CONFLICT);
 
 @Catch(MongoError)
 export class MongoExceptionFilter implements ExceptionFilter {
@@ -35,7 +38,7 @@ export class MongoExceptionFilter implements ExceptionFilter {
     }
 
     const response = {
-      error: 'DbConstraint',
+      error: 'DB_CONSTRAINT',
       statusCode: HttpStatus.BAD_REQUEST,
       errorCode,
     };

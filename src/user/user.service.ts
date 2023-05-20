@@ -1,5 +1,5 @@
-import { TodoRepository, UserRepository } from '@/common/database/repository';
-import { Todo, TodoStatus, User } from '@/common/database/schema';
+import { TaskRepository, UserRepository } from '@/common/database/repository';
+import { Task, TaskStatus, User } from '@/common/database/schema';
 import { UserSummary } from '@/common/dto';
 import { EntityId, getHash } from '@/common/helpers';
 import { Inject, Injectable } from '@nestjs/common';
@@ -9,8 +9,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Injectable()
 export class UserService {
   constructor(
-    @Inject(TodoRepository)
-    private readonly todoRepository: TodoRepository,
+    @Inject(TaskRepository)
+    private readonly taskRepository: TaskRepository,
     @Inject(UserRepository)
     private readonly userRepository: UserRepository,
   ) {}
@@ -35,8 +35,8 @@ export class UserService {
     await this.userRepository.findOneAndUpdate({ _id }, dto);
   }
 
-  getTodos(userId: string): Promise<Todo[]> {
-    return this.todoRepository.find(
+  getTasks(userId: string): Promise<Task[]> {
+    return this.taskRepository.find(
       {
         owner: userId,
       },
@@ -45,10 +45,10 @@ export class UserService {
   }
 
   async getSummary(userId: string): Promise<UserSummary> {
-    const summary = await this.todoRepository
+    const summary = await this.taskRepository
       .aggregate<UserSummary>()
       .match({
-        status: TodoStatus.Completed,
+        status: TaskStatus.Completed,
         owner: new EntityId(userId),
       })
       .processSummaryData()
@@ -58,9 +58,9 @@ export class UserService {
   }
 
   getTopSummary(top: number): Promise<UserSummary[]> {
-    return this.todoRepository
+    return this.taskRepository
       .aggregate<UserSummary>()
-      .match({ status: TodoStatus.Completed })
+      .match({ status: TaskStatus.Completed })
       .processSummaryData()
       .sort({ totalPoint: -1 })
       .limit(top)

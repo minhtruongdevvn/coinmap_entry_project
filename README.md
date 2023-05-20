@@ -64,7 +64,6 @@ This web-app is used by manager to assign the tasks for employee.
     RT_SIGN_SECRET='supa-secret2'
     DATABASE_URL='your mongodb database connection to the database'
    ```
-3. Open postman and import [this file](coinmap_entry.postman_collection.json) to access API usages
 
 <p align="right">(<a href="#about-the-project">back to top</a>)</p>
 
@@ -81,6 +80,5 @@ This web-app is used by manager to assign the tasks for employee.
 - Add testing
 - Create client (react web application)
 - Integrate CASL and implement PoliciesGuard (remove hardcoded roles)
-- Add interceptor to filter sensitive, unwanted fields in response
-- Todos and users pagination
+- Tasks and users pagination
 - Implement web-socket protocol to notify employee about assigned a task

@@ -1,15 +1,22 @@
-import { AppSchema } from '@/common/decorator/app-schema.decorator';
+import { AppSchema, Projection } from '@/common/decorator';
 import { Role } from '@/common/enum/role.enum';
 import { Prop, SchemaFactory } from '@nestjs/mongoose';
-import { Exclude } from 'class-transformer';
 import { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
+const projection: Projection<User> = (doc, ret) => {
+  delete ret.hash;
+  delete ret.hashRt;
+  return ret;
+};
 
-@AppSchema({
-  collection: 'User',
-  // versionKey: false
-})
+@AppSchema(
+  {
+    collection: 'User',
+    // versionKey: false
+  },
+  projection,
+)
 export class User {
   @Prop({ required: true })
   name?: string;
@@ -27,12 +34,12 @@ export class User {
   email?: string;
 
   @Prop({ required: true })
-  @Exclude({ toPlainOnly: true })
   hash?: string;
 
-  @Exclude({ toPlainOnly: true })
   @Prop({ default: null })
   hashRt?: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+const UserSchema = SchemaFactory.createForClass(User);
+
+export { UserSchema };

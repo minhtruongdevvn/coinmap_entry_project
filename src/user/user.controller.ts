@@ -1,4 +1,4 @@
-import { Todo, User } from '@/common/database/schema';
+import { Task, User } from '@/common/database/schema';
 import { UserSummary } from '@/common/dto';
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
@@ -36,9 +36,9 @@ export class UserController {
     return this.userService.profile(id);
   }
 
-  @Get('todos')
-  getTodos(@GetUser('sub') id: string): Promise<Todo[]> {
-    return this.userService.getTodos(id);
+  @Get('tasks')
+  getTasks(@GetUser('sub') id: string): Promise<Task[]> {
+    return this.userService.getTasks(id);
   }
 
   @Get('summary')

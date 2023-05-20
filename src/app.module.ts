@@ -7,13 +7,13 @@ import { CommonModule } from './common/common.module';
 import { MongoExceptionFilter } from './common/filter/mongo-exception-filter';
 import { AtGuard, RoleGuard } from './common/guard';
 import { TransformInterceptor } from './common/interceptor/transform.interceptor';
-import { TodoModule } from './todo/todo.module';
+import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TodoModule,
+    TaskModule,
     MongooseModule.forRootAsync({
       //imports: [ConfigModule], // no need as ConfigModule is global
       inject: [ConfigService],

@@ -1,17 +1,17 @@
 import { Body, Controller, Delete, Param, Post, Put } from '@nestjs/common';
 import { GetUser, Roles } from 'src/common/decorator';
 import { Role } from 'src/common/enum';
-import { CreateTodoDto, UpdateTodoDto } from './dto';
-import { TodoService } from './todo.service';
+import { CreateTaskDto, UpdateTaskDto } from './dto';
+import { TaskService } from './task.service';
 
-@Controller('todo')
-export class TodoController {
-  constructor(private readonly service: TodoService) {}
+@Controller('task')
+export class TaskController {
+  constructor(private readonly service: TaskService) {}
 
   @Roles(Role.MANAGER)
   @Post()
-  create(@Body() createTodoDto: CreateTodoDto) {
-    return this.service.create(createTodoDto);
+  create(@Body() createTaskDto: CreateTaskDto) {
+    return this.service.create(createTaskDto);
   }
 
   @Put(':id/:status')
@@ -26,8 +26,8 @@ export class TodoController {
 
   @Roles(Role.MANAGER)
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
-    return this.service.update(id, updateTodoDto);
+  update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    return this.service.update(id, updateTaskDto);
   }
 
   @Roles(Role.MANAGER)

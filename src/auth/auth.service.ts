@@ -57,8 +57,7 @@ export class AuthService {
     if (!userDoc) throw new UnauthorizedException(); // null
 
     const userId = userDoc.id;
-    console.log(userDoc.id);
-    const user = userDoc.toObject();
+    const user = userDoc;
     const isValidPwd = await validateHash(dto.password, user.hash);
     if (!isValidPwd) throw new UnauthorizedException();
 

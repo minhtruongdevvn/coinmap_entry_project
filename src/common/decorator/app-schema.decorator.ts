@@ -1,10 +1,21 @@
 import { Schema } from '@nestjs/mongoose';
-import { SchemaOptions } from 'mongoose';
+import { Document, SchemaOptions } from 'mongoose';
 
-export const AppSchema = (options?: SchemaOptions): ClassDecorator => {
+export type Projection<T> = (doc: Document<T>, ret: T) => any;
+
+export const AppSchema = <T>(
+  options?: SchemaOptions,
+  projection?: Projection<T>,
+): ClassDecorator => {
   return Schema({
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    toObject: {
+      virtuals: true,
+      transform: (doc: Document<T>, ret: T) => {
+        const data = projection(doc, ret);
+        delete data._id;
+        return data;
+      },
+    },
     ...options,
   });
 };

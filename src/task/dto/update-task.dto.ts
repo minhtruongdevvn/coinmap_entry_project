@@ -1,7 +1,7 @@
-import { TodoStatus } from '@/common/database/schema';
+import { TaskStatus } from '@/common/database/schema';
 import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class UpdateTodoDto {
+export class UpdateTaskDto {
   @IsString()
   @IsOptional()
   title?: string;
@@ -20,7 +20,7 @@ export class UpdateTodoDto {
 
   @IsNumber()
   @IsOptional()
-  status?: TodoStatus;
+  status?: TaskStatus;
 
   @IsNumber()
   @IsOptional()

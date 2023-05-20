@@ -4,7 +4,7 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { instanceToPlain } from 'class-transformer';
+import { decamelizeKeys } from 'fast-case';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,17 +17,15 @@ export class TransformInterceptor implements NestInterceptor {
         if (Array.isArray(data)) {
           data = data.map((item) => {
             if (item && typeof item.toObject === 'function') {
-              return item.toObject();
+              return decamelizeKeys(item.toObject());
             }
-            return item;
+            return decamelizeKeys(item);
           });
         } else if (data && typeof data.toObject === 'function') {
-          data = data.toObject();
+          data = decamelizeKeys(data.toObject());
         }
 
-        return instanceToPlain(data, {
-          excludePrefixes: ['_'],
-        });
+        return data;
       }),
     );
   }

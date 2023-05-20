@@ -1,12 +1,12 @@
 import { EntityRepository } from '@/common/database/repository/entity.repository';
-import { Todo, TodoDocument } from '@/common/database/schema';
+import { Task, TaskDocument } from '@/common/database/schema';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 @Injectable()
-export class TodoRepository extends EntityRepository<TodoDocument> {
-  constructor(@InjectModel(Todo.name) todoModel: Model<TodoDocument>) {
-    super(todoModel);
+export class TaskRepository extends EntityRepository<TaskDocument> {
+  constructor(@InjectModel(Task.name) taskModel: Model<TaskDocument>) {
+    super(taskModel);
   }
 }

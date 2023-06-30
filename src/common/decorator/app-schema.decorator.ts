@@ -10,11 +10,16 @@ export const AppSchema = <T>(
   return Schema({
     toObject: {
       virtuals: true,
-      transform: (doc: Document<T>, ret: T) => {
-        const data = projection(doc, ret);
-        delete data._id;
-        return data;
-      },
+      transform: !!projection
+        ? (doc: Document<T>, ret: T) => {
+            const data = projection(doc, ret);
+            delete data._id;
+            return data;
+          }
+        : (doc: Document<T>, ret) => {
+            delete ret._id;
+            return ret;
+          },
     },
     ...options,
   });

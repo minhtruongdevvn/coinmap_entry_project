@@ -1,4 +1,3 @@
-import { CreateTaskDto } from './create-task.dto';
-import { UpdateTaskDto } from './update-task.dto';
-
-export { CreateTaskDto, UpdateTaskDto };
+export * from './create-task.dto';
+export * from './update-task-status.dto';
+export * from './update-task.dto';

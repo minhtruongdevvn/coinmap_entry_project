@@ -1,5 +1,5 @@
 import { AuthModule } from '@/auth/auth.module';
-import { TodoModule } from '@/todo/task.module';
+import { TaskModule } from '@/task/task.module';
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
@@ -7,6 +7,6 @@ import { UserService } from './user.service';
 @Module({
   providers: [UserService],
   controllers: [UserController],
-  imports: [TodoModule, AuthModule],
+  imports: [TaskModule, AuthModule],
 })
 export class UserModule {}

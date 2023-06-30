@@ -6,13 +6,14 @@ export abstract class EntityRepository<T extends Document> {
   findOne(
     entityFilterQuery: FilterQuery<T>,
     projection?: Record<string, unknown>,
+    includes?: string[],
   ): Promise<T | null> {
-    return this.entityModel
-      .findOne(entityFilterQuery, {
-        __v: 0,
-        ...projection,
-      })
-      .exec();
+    const query = this.entityModel.findOne(entityFilterQuery, {
+      __v: 0,
+      ...projection,
+    });
+
+    return populate(query, includes).exec();
   }
 
   find(
@@ -59,3 +60,13 @@ export abstract class EntityRepository<T extends Document> {
     return this.entityModel.aggregate<T>();
   }
 }
+
+const populate = (query: any, includes?: string[]) => {
+  if (Array.isArray(includes)) {
+    for (const include of includes) {
+      query = query.populate(include, { __v: 0 });
+    }
+  }
+
+  return query;
+};

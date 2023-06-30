@@ -1,7 +1,15 @@
-import { Body, Controller, Delete, Param, Post, Put } from '@nestjs/common';
-import { GetUser, Roles } from 'src/common/decorator';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { Roles } from 'src/common/decorator';
 import { Role } from 'src/common/enum';
-import { CreateTaskDto, UpdateTaskDto } from './dto';
+import { CreateTaskDto, UpdateTaskDto, UpdateTaskStatusDto } from './dto';
 import { TaskService } from './task.service';
 
 @Controller('task')
@@ -14,14 +22,14 @@ export class TaskController {
     return this.service.create(createTaskDto);
   }
 
-  @Put(':id/:status')
-  async updateStatus(
-    @Param('id') id: string,
-    @Param('status' /*ParseIntPipe*/) status: number,
-    // no need the ParseIntPipe bc of ValidationPipe({transform: true})
-    @GetUser('sub') userId: string,
-  ) {
-    await this.service.updateStatus(userId, id, status);
+  @Get(':id')
+  getById(@Param('id') id: string) {
+    return this.service.findById(id);
+  }
+
+  @Put('status')
+  async updateStatus(@Body() dto: UpdateTaskStatusDto) {
+    await this.service.updateStatus(dto);
   }
 
   @Roles(Role.MANAGER)

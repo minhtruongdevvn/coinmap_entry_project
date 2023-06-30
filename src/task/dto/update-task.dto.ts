@@ -1,18 +1,18 @@
 import { TaskStatus } from '@/common/database/schema';
 import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class UpdateTaskDto {
+export class UpdateTaskDto implements Partial<UpdateTaskDto> {
   @IsString()
   @IsOptional()
-  title?: string;
+  title: string;
 
   @IsString()
   @IsOptional()
-  description?: string;
+  description: string;
 
   @IsDate()
   @IsOptional()
-  createdAt?: string;
+  createdAt: string;
 
   @IsDate()
   @IsOptional()
@@ -20,7 +20,7 @@ export class UpdateTaskDto {
 
   @IsNumber()
   @IsOptional()
-  status?: TaskStatus;
+  status: TaskStatus;
 
   @IsNumber()
   @IsOptional()

@@ -1,7 +1,8 @@
 import { User } from '@/common/database/schema/user.schema';
 import { AppSchema } from '@/common/decorator/app-schema.decorator';
+import { EntityId } from '@/common/helpers';
 import { Prop, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
+import { HydratedDocument } from 'mongoose';
 
 export type TaskDocument = HydratedDocument<Task>;
 export enum TaskStatus {
@@ -9,7 +10,7 @@ export enum TaskStatus {
   Completed,
 }
 
-@AppSchema({
+@AppSchema<Task>({
   collection: 'Task',
 })
 export class Task {
@@ -32,11 +33,11 @@ export class Task {
   point?: number;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
+    type: EntityId,
     ref: User.name,
     required: true,
   })
-  owner?: User;
+  owner?: User | EntityId;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

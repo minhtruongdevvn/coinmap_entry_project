@@ -1,7 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { TodoRepository, UserRepository } from './database/repository';
-import { Todo, TodoSchema, User, UserSchema } from './database/schema';
+import { TaskRepository, UserRepository } from './database/repository';
+import { Task, TaskSchema, User, UserSchema } from './database/schema';
 
 @Module({})
 export class CommonModule {
@@ -11,12 +11,12 @@ export class CommonModule {
       global: true,
       imports: [
         MongooseModule.forFeature([
-          { name: Todo.name, schema: TodoSchema },
+          { name: Task.name, schema: TaskSchema },
           { name: User.name, schema: UserSchema },
         ]),
       ],
-      providers: [TodoRepository, UserRepository],
-      exports: [TodoRepository, UserRepository],
+      providers: [TaskRepository, UserRepository],
+      exports: [TaskRepository, UserRepository],
     };
   }
 }

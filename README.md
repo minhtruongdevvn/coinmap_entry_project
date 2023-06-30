@@ -49,22 +49,6 @@ This web-app is used by manager to assign the tasks for employee.
 
 [![Nest][NestJS]][NestJSUri] [![MongoDB][MongoDB]][MongoDBUri]
 
-<!-- GETTING STARTED -->
-
-## Installation
-
-1. Install NPM packages
-   ```sh
-   yarn
-   ```
-2. Create .env file at root contains
-   ```sh
-    PORT=3333
-    AT_SIGN_SECRET='supa-secret'
-    RT_SIGN_SECRET='supa-secret2'
-    DATABASE_URL='your mongodb database connection to the database'
-   ```
-
 <p align="right">(<a href="#about-the-project">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -79,6 +63,5 @@ This web-app is used by manager to assign the tasks for employee.
 
 - Add testing
 - Create client (react web application)
-- Integrate CASL and implement PoliciesGuard (remove hardcoded roles)
 - Tasks and users pagination
 - Implement web-socket protocol to notify employee about assigned a task

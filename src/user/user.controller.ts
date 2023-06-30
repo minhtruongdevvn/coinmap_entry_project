@@ -48,7 +48,10 @@ export class UserController {
 
   @Public()
   @Get('top/:top')
-  getTop(@Param('top') top: number): Promise<UserSummary[]> {
+  getTop(
+    @Param('top' /*ParseIntPipe*/) top: number,
+    // no need the ParseIntPipe bc of ValidationPipe({transform: true})
+  ): Promise<UserSummary[]> {
     return this.userService.getTopSummary(top);
   }
 

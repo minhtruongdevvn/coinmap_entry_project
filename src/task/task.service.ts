@@ -1,6 +1,7 @@
 import { TaskRepository } from '@/common/database/repository';
-import { Task, TaskStatus } from '@/common/database/schema';
+import { Task } from '@/common/database/schema';
 import { Inject, Injectable } from '@nestjs/common';
+import { UpdateTaskStatusDto } from './dto';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
@@ -15,8 +16,8 @@ export class TaskService {
     return this.taskRepository.find();
   }
 
-  findById(id: string): Promise<Task> {
-    return this.taskRepository.findOne({ id });
+  async findById(_id: string): Promise<Task> {
+    return this.taskRepository.findOne({ _id }, undefined, ['owner']);
   }
 
   async create(createTaskDto: CreateTaskDto): Promise<Task> {
@@ -27,22 +28,22 @@ export class TaskService {
     return await res.populate('owner', { hash: 0, hashRt: 0 });
   }
 
-  update(id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
-    return this.taskRepository.findOneAndUpdate({ id }, updateTaskDto);
+  update(_id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
+    return this.taskRepository.findOneAndUpdate({ _id }, updateTaskDto);
   }
 
-  delete(id: string): Promise<void> {
-    return this.taskRepository.findOneAndDelete({ id });
+  delete(_id: string): Promise<void> {
+    return this.taskRepository.findOneAndDelete({ _id });
   }
 
-  updateStatus(userId: string, taskId: string, status: TaskStatus) {
+  updateStatus(dto: UpdateTaskStatusDto) {
     return this.taskRepository.findOneAndUpdate(
       {
-        owner: userId,
-        _id: taskId,
+        owner: dto.userId,
+        _id: dto.taskId,
       },
       {
-        status,
+        status: dto.status,
       },
     );
   }

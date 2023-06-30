@@ -1,18 +1,18 @@
 import { Role } from '@/common/enum';
 import { IsDate, IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
 
-export class UpdateUserDto {
+export class UpdateUserDto implements Partial<UpdateUserDto> {
   @IsOptional()
   @IsString()
-  name?: string;
+  name: string;
 
   @IsOptional()
   @IsEmail()
-  email?: string;
+  email: string;
 
   @IsOptional()
   @IsEnum(Role)
-  role?: Role;
+  role: Role;
 
   @IsDate()
   @IsOptional()
